@@ -1,0 +1,36 @@
+#include <Servo.h>
+
+Servo myServo;
+
+int centerPos = 90;
+int bioPos = 0;
+int nonBioPos = 180;
+
+void setup()
+{
+  Serial.begin(9600);
+  myServo.attach(9);
+  myServo.write(centerPos);
+}
+
+void loop()
+{
+  if (Serial.available())
+  {
+    char data = Serial.read();
+
+    if (data == 'B')
+    {
+      myServo.write(bioPos);
+      delay(2000);
+      myServo.write(centerPos);
+    }
+
+    if (data == 'N')
+    {
+      myServo.write(nonBioPos);
+      delay(2000);
+      myServo.write(centerPos);
+    }
+  }
+}
